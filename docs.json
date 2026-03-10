@@ -1,122 +1,105 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
-  "name": "Mint Starter Kit",
+  "theme": "maple",
+  "name": "Teel API",
+  "description": "Cross-border payment and stablecoin transfer platform API documentation",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#6366F1",
+    "light": "#818CF8",
+    "dark": "#4F46E5"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/favicon.png",
+  "navbar": {
+    "primary": {
+      "type": "button",
+      "label": "Dashboard",
+      "href": "https://app.teel.finance"
+    }
+  },
   "navigation": {
-    "tabs": [
+    "global": {
+      "tabs": [
+        {
+          "tab": "Documentation",
+          "href": "/",
+          "icon": "book"
+        },
+        {
+          "tab": "API Reference",
+          "href": "/api-reference",
+          "icon": "code"
+        }
+      ]
+    },
+    "dropdowns": [
       {
-        "tab": "Guides",
+        "dropdown": "Documentation",
+        "icon": "book",
         "groups": [
           {
-            "group": "Getting started",
-            "pages": [
-              "index",
-              "quickstart",
-              "development"
-            ]
+            "group": "Getting Started",
+            "pages": ["introduction", "authentication"]
           },
           {
-            "group": "Customization",
+            "group": "Guides",
             "pages": [
-              "essentials/settings",
-              "essentials/navigation"
-            ]
-          },
-          {
-            "group": "Writing content",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
-            "group": "AI tools",
-            "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "guides/fiat-to-fiat-payout",
+              "guides/stablecoin-transfer",
+              "guides/crypto-payout",
+              "guides/kyb-onboarding"
             ]
           }
         ]
       },
       {
-        "tab": "API reference",
+        "dropdown": "API Reference",
+        "icon": "code",
         "groups": [
           {
-            "group": "API documentation",
+            "group": "Payouts",
             "pages": [
-              "api-reference/introduction"
+              "api-reference/payouts/list",
+              "api-reference/payouts/get",
+              "api-reference/payouts/create",
+              "api-reference/payouts/update",
+              "api-reference/payouts/delete"
             ]
           },
           {
-            "group": "Endpoint examples",
+            "group": "Recipients",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "api-reference/recipients/list",
+              "api-reference/recipients/get",
+              "api-reference/recipients/create",
+              "api-reference/recipients/update",
+              "api-reference/recipients/delete"
+            ]
+          },
+          {
+            "group": "Payment Methods",
+            "pages": [
+              "api-reference/payment-methods/list",
+              "api-reference/payment-methods/get",
+              "api-reference/payment-methods/requirements",
+              "api-reference/payment-methods/create",
+              "api-reference/payment-methods/delete"
+            ]
+          },
+          {
+            "group": "Webhooks",
+            "pages": [
+              "api-reference/webhooks/overview",
+              "api-reference/webhooks/transfi",
+              "api-reference/webhooks/pdax",
+              "api-reference/webhooks/conduit",
+              "api-reference/webhooks/airwallex",
+              "api-reference/webhooks/borderless",
+              "api-reference/webhooks/onrampmoney",
+              "api-reference/webhooks/luno"
             ]
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
-  },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
-  },
-  "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
-    }
-  },
-  "contextual": {
-    "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
-  },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
-    }
+    ]
   }
 }

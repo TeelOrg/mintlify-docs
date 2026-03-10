@@ -1,0 +1,43 @@
+---
+title: Authentication
+description: How to authenticate with the Teel API
+---
+
+# Authentication
+
+The Teel API uses **Auth0 JWT Bearer tokens** for authentication. All API requests must include a valid token in the `Authorization` header.
+
+## Making Authenticated Requests
+
+Include the JWT token in every request:
+
+```bash
+curl -X GET https://dev.teelapp.io/api/payouts \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+## Additional Headers
+
+Some endpoints require additional headers for resource scoping:
+
+| Header                | Description                     | Used By                           |
+| --------------------- | ------------------------------- | --------------------------------- |
+| `X-User-ID`           | Internal user identifier        | Recipients, KYB onboarding status |
+| `X-Customer-ID`       | Conduit customer identifier     | Conduit provider endpoints        |
+| `X-Counterparty-ID`   | Conduit counterparty identifier | Counterparty operations           |
+| `X-Control-Person-ID` | Control person identifier       | Liveness checks                   |
+| `X-Payment-Method-ID` | Payment method identifier       | Payment method deletion           |
+
+## Error Responses
+
+Authentication errors return a `401 Unauthorized` response:
+
+```json
+{
+  "error": "invalid or expired token"
+}
+```
+
+## Rate Limiting
+
+API requests are rate-limited per user. If you exceed the limit, you will receive a `429 Too Many Requests` response.
