@@ -1,0 +1,80 @@
+---
+title: "Coverage"
+description: "Supported countries, currencies, and payment rails"
+---
+
+Teel aggregates multiple payment providers behind a single API, giving you broad coverage across currencies, countries, and payment rails. The specific corridors available to your business depend on your KYB onboarding status.
+
+## Payment Corridors
+
+Teel supports four types of payment flows:
+
+<CardGroup cols={2}>
+  <Card title="Fiat-to-Fiat">
+    Cross-border bank transfers from one fiat currency to another. Teel handles
+    the onramp and offramp legs automatically, selecting the best route.
+  </Card>
+  <Card title="Fiat-to-Stablecoin">
+    Onramp from fiat currency to stablecoins (USDC, USDT). Funds are deposited
+    to a blockchain wallet address.
+  </Card>
+  <Card title="Stablecoin-to-Fiat">
+    Offramp from stablecoins to fiat currency. Stablecoins are converted and
+    delivered to a bank account.
+  </Card>
+  <Card title="Stablecoin-to-Stablecoin">
+    Cross-chain stablecoin transfers via bridge. Move tokens between supported
+    blockchain networks.
+  </Card>
+</CardGroup>
+
+## Supported Currencies
+
+Teel supports a wide range of currencies across multiple regions. Available corridors depend on your onboarding status.
+
+| Region         | Currencies         | Payment Rails                          |
+| -------------- | ------------------ | -------------------------------------- |
+| North America  | USD                | ACH, Wire, SWIFT                       |
+| Europe         | EUR, GBP           | SEPA, Faster Payments, SWIFT           |
+| Southeast Asia | PHP, IDR, VND, MYR | Local bank transfer, InstaPay, PESONet |
+| South Asia     | INR                | UPI, Bank Transfer                     |
+| Latin America  | MXN, BRL           | Local bank transfer                    |
+| Africa         | ZAR, NGN, KES, GHS | Local rails                            |
+
+## Blockchain Networks
+
+For stablecoin operations (onramp, offramp, and cross-chain transfers), Teel supports the following networks and tokens.
+
+**Supported chains:**
+
+- Ethereum
+- Arbitrum
+- Polygon
+- Base
+
+**Supported tokens:**
+
+- USDC
+- USDT
+- MYRC
+
+**Cross-chain transfers:**
+
+- Native USDC transfers via CCTP (Circle)
+- Fast bridging across supported chains
+
+## Checking Available Currencies
+
+To see which currencies are available based on your onboarding status, call the capabilities endpoint:
+
+```bash
+curl -X GET https://api.teel.finance/api/kyb/capabilities/currencies \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+This returns the full list of currencies you can send and receive based on your current onboarding status.
+
+<Note>
+  Coverage depends on your KYB status. Complete onboarding to unlock additional
+  corridors.
+</Note>

@@ -12,8 +12,8 @@
   "navbar": {
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://app.teel.finance"
+      "label": "Home Page",
+      "href": "https://teel.finance"
     }
   },
   "navigation": {
@@ -38,15 +38,24 @@
         "groups": [
           {
             "group": "Getting Started",
-            "pages": ["introduction", "authentication"]
+            "pages": [
+              "introduction",
+              "quickstart",
+              "authentication",
+              "concepts",
+              "coverage"
+            ]
           },
           {
             "group": "Guides",
             "pages": [
+              "guides/kyb-onboarding",
+              "guides/recipients",
+              "guides/payment-methods",
               "guides/fiat-to-fiat-payout",
               "guides/stablecoin-transfer",
               "guides/crypto-payout",
-              "guides/kyb-onboarding"
+              "guides/webhooks"
             ]
           }
         ]
@@ -56,13 +65,23 @@
         "icon": "code",
         "groups": [
           {
-            "group": "Payouts",
+            "group": "Users",
+            "pages": ["api-reference/users/me", "api-reference/users/sync"]
+          },
+          {
+            "group": "Businesses",
             "pages": [
-              "api-reference/payouts/list",
-              "api-reference/payouts/get",
-              "api-reference/payouts/create",
-              "api-reference/payouts/update",
-              "api-reference/payouts/delete"
+              "api-reference/businesses/create",
+              "api-reference/businesses/get"
+            ]
+          },
+          {
+            "group": "KYB",
+            "pages": [
+              "api-reference/kyb/capabilities-currencies",
+              "api-reference/kyb/capabilities-counterparty",
+              "api-reference/kyb/register",
+              "api-reference/kyb/onboarding-status"
             ]
           },
           {
@@ -78,24 +97,46 @@
           {
             "group": "Payment Methods",
             "pages": [
+              "api-reference/payment-methods/requirements",
               "api-reference/payment-methods/list",
               "api-reference/payment-methods/get",
-              "api-reference/payment-methods/requirements",
               "api-reference/payment-methods/create",
               "api-reference/payment-methods/delete"
             ]
           },
           {
+            "group": "Quotes",
+            "pages": [
+              "api-reference/quotes/fiat-to-fiat-best",
+              "api-reference/quotes/fiat-to-fiat-all",
+              "api-reference/quotes/fiat-to-stablecoin-best",
+              "api-reference/quotes/fiat-to-stablecoin-all",
+              "api-reference/quotes/onramp-best",
+              "api-reference/quotes/offramp-best"
+            ]
+          },
+          {
+            "group": "Payouts",
+            "pages": [
+              "api-reference/payouts/list",
+              "api-reference/payouts/get",
+              "api-reference/payouts/create",
+              "api-reference/payouts/update",
+              "api-reference/payouts/delete"
+            ]
+          },
+          {
+            "group": "Bridge",
+            "pages": [
+              "api-reference/bridge/quote",
+              "api-reference/bridge/execute",
+              "api-reference/bridge/status"
+            ]
+          },
+          {
             "group": "Webhooks",
             "pages": [
-              "api-reference/webhooks/overview",
-              "api-reference/webhooks/transfi",
-              "api-reference/webhooks/pdax",
-              "api-reference/webhooks/conduit",
-              "api-reference/webhooks/airwallex",
-              "api-reference/webhooks/borderless",
-              "api-reference/webhooks/onrampmoney",
-              "api-reference/webhooks/luno"
+              "api-reference/webhooks/overview"
             ]
           }
         ]

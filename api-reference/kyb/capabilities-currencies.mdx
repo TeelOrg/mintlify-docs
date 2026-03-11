@@ -1,0 +1,54 @@
+---
+title: Get Supported Currencies
+api: GET https://api.teel.finance/api/kyb/capabilities/currencies
+description: Get the list of supported currencies across all providers
+---
+
+Returns a list of all supported currencies across every connected provider. No authentication is required for this endpoint.
+
+<Note>
+  This endpoint does not require authentication and can be called publicly.
+</Note>
+
+## Response
+
+<ResponseField name="currencies" type="array">
+  Array of supported currency objects.
+  <Expandable title="Currency object">
+    <ResponseField name="code" type="string">
+      ISO 4217 currency code (e.g. `USD`, `MXN`, `NGN`).
+    </ResponseField>
+
+    <ResponseField name="name" type="string">
+      Human-readable currency name.
+    </ResponseField>
+
+    <ResponseField name="providers" type="array">
+      List of providers that support this currency.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseExample>
+```json 200
+{
+  "currencies": [
+    {
+      "code": "USD",
+      "name": "US Dollar",
+      "providers": ["conduit", "lemonado", "circle"]
+    },
+    {
+      "code": "MXN",
+      "name": "Mexican Peso",
+      "providers": ["conduit", "lemonado"]
+    },
+    {
+      "code": "NGN",
+      "name": "Nigerian Naira",
+      "providers": ["conduit"]
+    }
+  ]
+}
+```
+</ResponseExample>

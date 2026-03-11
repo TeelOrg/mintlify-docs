@@ -5,17 +5,9 @@ description: Receive real-time updates for transaction and account status change
 
 Teel sends webhook notifications to your configured endpoints when events occur, such as transaction status updates, KYC completions, and account changes.
 
-## Supported Providers
+## How It Works
 
-| Provider | Endpoint | Signature Verification |
-|----------|----------|----------------------|
-| Transfi | `POST /api/transfi/webhook` | HMAC-SHA256 |
-| PDAX | `POST /api/pdax/webhook` | None |
-| Conduit | `POST /api/conduit/webhook` | HMAC-SHA256 |
-| Airwallex | `POST /api/airwallex/webhook` | HMAC-SHA256 |
-| Borderless | `POST /api/borderless/webhook` | None |
-| OnrampMoney | `POST /api/onrampmoney/webhook` | Custom signature |
-| Luno | `POST /api/luno/webhook` | None |
+Teel manages webhook integrations with all underlying providers on your behalf. When a provider sends a status update, Teel processes it and forwards the relevant event to your application via WebSocket.
 
 ## Common Behavior
 
@@ -27,6 +19,10 @@ All webhook handlers follow the same pattern:
 4. Update transaction status
 5. Broadcast status update via WebSocket
 6. Auto-trigger offramp when onramp completes (where applicable)
+
+## Listening for Events
+
+Rather than configuring individual provider webhooks, connect to the Teel WebSocket to receive all status updates in a unified format. See the [Webhooks & Real-Time Updates](/guides/webhooks) guide for details.
 
 ## Responding to Webhooks
 

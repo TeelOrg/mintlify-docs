@@ -1,0 +1,122 @@
+---
+title: "Quickstart"
+description: "Get up and running with the Teel API in 5 minutes"
+---
+
+This guide walks you through making your first cross-border payout using the Teel API.
+
+<Steps>
+  <Step title="Authenticate">
+    All Teel API requests require a valid Auth0 JWT token in the `Authorization` header.
+
+    ```bash
+    curl -X POST https://auth.teel.finance/oauth/token \
+      -H "Content-Type: application/json" \
+      -d '{
+        "client_id": "YOUR_CLIENT_ID",
+        "client_secret": "YOUR_CLIENT_SECRET",
+        "audience": "https://api.teel.finance",
+        "grant_type": "client_credentials"
+      }'
+    ```
+
+    Save the `access_token` from the response. You will use it in all subsequent requests.
+
+    ```bash
+    export TEEL_TOKEN="your_access_token_here"
+    ```
+  </Step>
+
+  <Step title="Check Coverage">
+    Verify which currencies and corridors are available for your account based on your KYB status.
+
+    ```bash
+    curl -X GET https://api.teel.finance/api/kyb/capabilities/currencies \
+      -H "Authorization: Bearer $TEEL_TOKEN"
+    ```
+
+    The response lists all currencies you can send and receive. Ensure your desired corridor (e.g., USD to PHP) is supported before proceeding.
+  </Step>
+
+  <Step title="Create a Recipient">
+    Register the person or business you want to send funds to.
+
+    ```bash
+    curl -X POST https://api.teel.finance/api/recipients \
+      -H "Authorization: Bearer $TEEL_TOKEN" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "business_name": "Acme Corp Philippines",
+        "email": "payments@acme-ph.com",
+        "country": "PH",
+        "bank_details": {
+          "account_name": "Acme Corp Philippines",
+          "account_number": "1234567890",
+          "bank_code": "BDO"
+        }
+      }'
+    ```
+
+    Save the `id` from the response. This is your `recipient_id`.
+  </Step>
+
+  <Step title="Get a Quote">
+    Fetch the best available rate across all providers for your corridor.
+
+    ```bash
+    curl -X GET "https://api.teel.finance/api/quotes/fiat-to-fiat/best?source_currency=USD&target_currency=PHP&amount=1000" \
+      -H "Authorization: Bearer $TEEL_TOKEN"
+    ```
+
+    The response includes the exchange rate, fees, estimated delivery amount, provider selected, and the quote TTL (expiry). You must use the quote before it expires.
+  </Step>
+
+  <Step title="Create a Payout">
+    Execute the payout using the quote and recipient from the previous steps.
+
+    ```bash
+    curl -X POST https://api.teel.finance/api/payouts \
+      -H "Authorization: Bearer $TEEL_TOKEN" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "quote_id": "quote_abc123",
+        "recipient_id": "recipient_xyz789",
+        "source_currency": "USD",
+        "target_currency": "PHP",
+        "amount": 1000,
+        "reference": "invoice-2024-001"
+      }'
+    ```
+
+    The payout is created in `pending` status and begins processing immediately.
+  </Step>
+
+  <Step title="Track Status">
+    You can check payout status at any time via the REST API:
+
+    ```bash
+    curl -X GET https://api.teel.finance/api/payouts/PAYOUT_ID \
+      -H "Authorization: Bearer $TEEL_TOKEN"
+    ```
+
+    For real-time updates, connect to the WebSocket endpoint:
+
+    ```bash
+    wscat -c "wss://api.teel.finance/ws" \
+      -H "Authorization: Bearer $TEEL_TOKEN"
+    ```
+
+    The WebSocket pushes status changes as they happen: `pending`, `processing`, `completed`, or `failed`.
+  </Step>
+</Steps>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Core Concepts" href="/concepts">
+    Understand the multi-provider architecture, quote engine, and transaction lifecycle.
+  </Card>
+  <Card title="Coverage" href="/coverage">
+    See all supported countries, currencies, and payment rails.
+  </Card>
+</CardGroup>
