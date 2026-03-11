@@ -6,24 +6,13 @@ description: "Get up and running with the Teel API in 5 minutes"
 This guide walks you through making your first cross-border payout using the Teel API.
 
 <Steps>
-  <Step title="Authenticate">
-    All Teel API requests require a valid Auth0 JWT token in the `Authorization` header.
+  <Step title="Get Your API Key">
+    Create an API key from the **API Keys** page in your [Teel dashboard](https://app.teel.finance). New keys require activation — contact **dahui@teelapp.io** with your use case.
+
+    Once activated, set it as an environment variable:
 
     ```bash
-    curl -X POST https://auth.teel.finance/oauth/token \
-      -H "Content-Type: application/json" \
-      -d '{
-        "client_id": "YOUR_CLIENT_ID",
-        "client_secret": "YOUR_CLIENT_SECRET",
-        "audience": "https://api.teel.finance",
-        "grant_type": "client_credentials"
-      }'
-    ```
-
-    Save the `access_token` from the response. You will use it in all subsequent requests.
-
-    ```bash
-    export TEEL_TOKEN="your_access_token_here"
+    export TEEL_API_KEY="teel_live_your_api_key_here"
     ```
   </Step>
 
@@ -32,7 +21,7 @@ This guide walks you through making your first cross-border payout using the Tee
 
     ```bash
     curl -X GET https://api.teel.finance/api/kyb/capabilities/currencies \
-      -H "Authorization: Bearer $TEEL_TOKEN"
+      -H "X-API-Key: $TEEL_API_KEY"
     ```
 
     The response lists all currencies you can send and receive. Ensure your desired corridor (e.g., USD to PHP) is supported before proceeding.
@@ -43,7 +32,7 @@ This guide walks you through making your first cross-border payout using the Tee
 
     ```bash
     curl -X POST https://api.teel.finance/api/recipients \
-      -H "Authorization: Bearer $TEEL_TOKEN" \
+      -H "X-API-Key: $TEEL_API_KEY" \
       -H "Content-Type: application/json" \
       -d '{
         "business_name": "Acme Corp Philippines",
@@ -65,7 +54,7 @@ This guide walks you through making your first cross-border payout using the Tee
 
     ```bash
     curl -X GET "https://api.teel.finance/api/quotes/fiat-to-fiat/best?source_currency=USD&target_currency=PHP&amount=1000" \
-      -H "Authorization: Bearer $TEEL_TOKEN"
+      -H "X-API-Key: $TEEL_API_KEY"
     ```
 
     The response includes the exchange rate, fees, estimated delivery amount, provider selected, and the quote TTL (expiry). You must use the quote before it expires.
@@ -76,7 +65,7 @@ This guide walks you through making your first cross-border payout using the Tee
 
     ```bash
     curl -X POST https://api.teel.finance/api/payouts \
-      -H "Authorization: Bearer $TEEL_TOKEN" \
+      -H "X-API-Key: $TEEL_API_KEY" \
       -H "Content-Type: application/json" \
       -d '{
         "quote_id": "quote_abc123",
@@ -96,14 +85,14 @@ This guide walks you through making your first cross-border payout using the Tee
 
     ```bash
     curl -X GET https://api.teel.finance/api/payouts/PAYOUT_ID \
-      -H "Authorization: Bearer $TEEL_TOKEN"
+      -H "X-API-Key: $TEEL_API_KEY"
     ```
 
     For real-time updates, connect to the WebSocket endpoint:
 
     ```bash
     wscat -c "wss://api.teel.finance/ws" \
-      -H "Authorization: Bearer $TEEL_TOKEN"
+      -H "X-API-Key: $TEEL_API_KEY"
     ```
 
     The WebSocket pushes status changes as they happen: `pending`, `processing`, `completed`, or `failed`.
@@ -113,10 +102,16 @@ This guide walks you through making your first cross-border payout using the Tee
 ## Next Steps
 
 <CardGroup cols={2}>
+  <Card title="Authentication" href="/authentication">
+    Learn about API key management, JWT tokens, and WebSocket auth.
+  </Card>
   <Card title="Core Concepts" href="/concepts">
     Understand the multi-provider architecture, quote engine, and transaction lifecycle.
   </Card>
   <Card title="Coverage" href="/coverage">
     See all supported countries, currencies, and payment rails.
+  </Card>
+  <Card title="KYB Onboarding" href="/guides/kyb-onboarding">
+    Complete the Know Your Business process to unlock all corridors.
   </Card>
 </CardGroup>

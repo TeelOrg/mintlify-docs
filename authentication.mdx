@@ -5,20 +5,70 @@ description: How to authenticate with the Teel API
 
 # Authentication
 
-The Teel API uses **Auth0 JWT Bearer tokens** for authentication. All API requests must include a valid token in the `Authorization` header.
+The Teel API supports two authentication methods: **API keys** for server-to-server integrations and **Auth0 JWT tokens** for dashboard-based access.
 
-## Making Authenticated Requests
+## API Key Authentication (Recommended for Integrations)
 
-Include the JWT token in every request:
+API keys are the simplest way to authenticate server-to-server requests. Include your key in the `X-API-Key` header:
 
 ```bash
-curl -X GET https://dev.teelapp.io/api/payouts \
+curl -X GET https://api.teel.finance/api/payouts \
+  -H "X-API-Key: teel_live_your_api_key_here"
+```
+
+### Getting an API Key
+
+<Steps>
+  <Step title="Sign up and complete KYB">
+    Create an account at [app.teel.finance](https://app.teel.finance) and complete the Know Your Business (KYB) onboarding process.
+  </Step>
+  <Step title="Create an API key">
+    Navigate to the **API Keys** page in your dashboard. Click **Create API Key**, give it a label (e.g., "Production"), and save the key securely. The full key is only shown once.
+  </Step>
+  <Step title="Request activation">
+    New API keys start in an **inactive** state. Contact **dahui@teelapp.io** with your use case to request activation. Once approved, your key will be activated and ready to use.
+  </Step>
+</Steps>
+
+<Warning>
+  **Store your API key securely.** The full key is only displayed once at creation time. If you lose it, you can regenerate a new one from the dashboard (the old key will be immediately revoked).
+</Warning>
+
+### Key Lifecycle
+
+| Status | Description |
+| --- | --- |
+| **Inactive** | Key created but not yet activated. Cannot be used for API requests. |
+| **Active** | Key activated by Teel team. Ready for API access. |
+| **Revoked** | Key permanently disabled. Create a new key if needed. |
+
+You can manage multiple keys per business (e.g., separate keys for staging and production). Revoke or regenerate keys at any time from the dashboard.
+
+## JWT Authentication
+
+For dashboard applications and OAuth-based integrations, use Auth0 JWT Bearer tokens:
+
+```bash
+curl -X GET https://api.teel.finance/api/payouts \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+Obtain a token using the Auth0 client credentials flow:
+
+```bash
+curl -X POST https://auth.teel.finance/oauth/token \
+  -H "Content-Type: application/json" \
+  -d '{
+    "client_id": "YOUR_CLIENT_ID",
+    "client_secret": "YOUR_CLIENT_SECRET",
+    "audience": "https://api.teel.finance",
+    "grant_type": "client_credentials"
+  }'
 ```
 
 ## Additional Headers
 
-Some endpoints require additional headers for resource scoping:
+Some endpoints accept additional headers for resource scoping:
 
 | Header                | Description                     | Used By                           |
 | --------------------- | ------------------------------- | --------------------------------- |
@@ -28,16 +78,37 @@ Some endpoints require additional headers for resource scoping:
 | `X-Control-Person-ID` | Control person identifier       | Liveness checks                   |
 | `X-Payment-Method-ID` | Payment method identifier       | Payment method deletion           |
 
+## WebSocket Authentication
+
+For real-time payout status updates via WebSocket, pass your API key as a header on the connection upgrade:
+
+```bash
+wscat -c "wss://api.teel.finance/ws" \
+  -H "X-API-Key: teel_live_your_api_key_here"
+```
+
+JWT authentication is also supported:
+
+```bash
+wscat -c "wss://api.teel.finance/ws" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
 ## Error Responses
 
 Authentication errors return a `401 Unauthorized` response:
 
 ```json
 {
-  "error": "invalid or expired token"
+  "error": "Valid API key required"
 }
 ```
 
+Common causes:
+- Missing or invalid `X-API-Key` or `Authorization` header
+- API key is inactive (not yet activated) or revoked
+- JWT token is expired or malformed
+
 ## Rate Limiting
 
-API requests are rate-limited per user. If you exceed the limit, you will receive a `429 Too Many Requests` response.
+API requests are rate-limited per key/user. If you exceed the limit, you will receive a `429 Too Many Requests` response.
