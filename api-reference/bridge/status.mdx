@@ -1,6 +1,6 @@
 ---
 title: Get Bridge Transfer Status
-api: GET https://api.teel.finance/api/bridge/status/{id}
+api: GET https://dev.teelapp.io/api/bridge/status/{id}
 description: Get the current status of a bridge transfer
 ---
 
@@ -19,7 +19,8 @@ Returns the current status of a previously initiated bridge transfer. When the t
 </ResponseField>
 
 <ResponseField name="status" type="string">
-  Current status of the bridge transfer (e.g. `pending`, `in_progress`, `completed`, `failed`).
+  Current status of the bridge transfer (e.g. `pending`, `in_progress`,
+  `completed`, `failed`).
 </ResponseField>
 
 <ResponseField name="sourceChain" type="string">
@@ -35,7 +36,8 @@ Returns the current status of a previously initiated bridge transfer. When the t
 </ResponseField>
 
 <ResponseField name="destTxHash" type="string">
-  Transaction hash on the destination chain. Present only when the transfer is completed.
+  Transaction hash on the destination chain. Present only when the transfer is
+  completed.
 </ResponseField>
 
 <ResponseField name="amount" type="number">

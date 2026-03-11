@@ -1,6 +1,6 @@
 ---
 title: Create Business
-api: POST https://api.teel.finance/api/businesses
+api: POST https://dev.teelapp.io/api/businesses
 description: Create a new business entity
 ---
 
@@ -21,7 +21,8 @@ This endpoint requires a valid JWT bearer token in the `Authorization` header.
 </ParamField>
 
 <ParamField body="country" type="string" required>
-  ISO 3166-1 alpha-2 country code where the business is registered (e.g. `US`, `GB`).
+  ISO 3166-1 alpha-2 country code where the business is registered (e.g. `US`,
+  `GB`).
 </ParamField>
 
 <ParamField body="email" type="string" required>

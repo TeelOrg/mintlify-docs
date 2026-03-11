@@ -11,18 +11,18 @@ Recipients (also called counterparties) are the businesses or individuals you se
 
 The transfer type determines what payment method information is required for the recipient.
 
-| Transfer Type              | Description                              | Required Payment Method         |
-|----------------------------|------------------------------------------|---------------------------------|
-| `fiat_to_fiat`             | Send fiat currency to a bank account     | Bank details (account number, routing number, SWIFT/BIC, etc.) |
-| `fiat_to_stablecoin`       | Convert fiat to stablecoin on delivery   | Wallet address                  |
-| `stablecoin_to_stablecoin` | Send stablecoins across chains           | Wallet addresses per chain      |
+| Transfer Type              | Description                            | Required Payment Method                                        |
+| -------------------------- | -------------------------------------- | -------------------------------------------------------------- |
+| `fiat_to_fiat`             | Send fiat currency to a bank account   | Bank details (account number, routing number, SWIFT/BIC, etc.) |
+| `fiat_to_stablecoin`       | Convert fiat to stablecoin on delivery | Wallet address                                                 |
+| `stablecoin_to_stablecoin` | Send stablecoins across chains         | Wallet addresses per chain                                     |
 
 ## Step 1: Get Counterparty Requirements
 
 Fetch the fields required to create a recipient based on your active providers and currencies.
 
 ```bash
-curl -X GET "https://api.teel.finance/api/kyb/capabilities/counterparty" \
+curl -X GET "https://dev.teelapp.io/api/kyb/capabilities/counterparty" \
   -H "Authorization: Bearer YOUR_API_TOKEN"
 ```
 
@@ -35,7 +35,16 @@ curl -X GET "https://api.teel.finance/api/kyb/capabilities/counterparty" \
       { "name": "business_name", "type": "string", "required": true },
       { "name": "email", "type": "string", "required": true },
       { "name": "country", "type": "string", "required": true },
-      { "name": "transfer_type", "type": "enum", "required": true, "values": ["fiat_to_fiat", "fiat_to_stablecoin", "stablecoin_to_stablecoin"] }
+      {
+        "name": "transfer_type",
+        "type": "enum",
+        "required": true,
+        "values": [
+          "fiat_to_fiat",
+          "fiat_to_stablecoin",
+          "stablecoin_to_stablecoin"
+        ]
+      }
     ]
   }
 }
@@ -46,7 +55,7 @@ curl -X GET "https://api.teel.finance/api/kyb/capabilities/counterparty" \
 If your recipient will receive stablecoins, fetch the list of supported wallet networks.
 
 ```bash
-curl -X GET "https://api.teel.finance/api/recipients/wallet-networks" \
+curl -X GET "https://dev.teelapp.io/api/recipients/wallet-networks" \
   -H "Authorization: Bearer YOUR_API_TOKEN"
 ```
 
@@ -70,7 +79,7 @@ Create the recipient with their business details and payment method information.
 ### Fiat-to-Fiat Example
 
 ```bash
-curl -X POST "https://api.teel.finance/api/recipients" \
+curl -X POST "https://dev.teelapp.io/api/recipients" \
   -H "Authorization: Bearer YOUR_API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -93,7 +102,7 @@ curl -X POST "https://api.teel.finance/api/recipients" \
 ### Fiat-to-Stablecoin Example
 
 ```bash
-curl -X POST "https://api.teel.finance/api/recipients" \
+curl -X POST "https://dev.teelapp.io/api/recipients" \
   -H "Authorization: Bearer YOUR_API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -115,7 +124,7 @@ curl -X POST "https://api.teel.finance/api/recipients" \
 ### Stablecoin-to-Stablecoin Example
 
 ```bash
-curl -X POST "https://api.teel.finance/api/recipients" \
+curl -X POST "https://dev.teelapp.io/api/recipients" \
   -H "Authorization: Bearer YOUR_API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -149,7 +158,7 @@ When a recipient is created, Teel automatically provisions them with all of your
 If provisioning fails for any provider (e.g., due to a temporary network issue), you can retry.
 
 ```bash
-curl -X POST "https://api.teel.finance/api/recipients/rec_abc123/retry" \
+curl -X POST "https://dev.teelapp.io/api/recipients/rec_abc123/retry" \
   -H "Authorization: Bearer YOUR_API_TOKEN"
 ```
 
@@ -158,7 +167,7 @@ curl -X POST "https://api.teel.finance/api/recipients/rec_abc123/retry" \
 Retrieve a recipient along with their full counterparty data from all providers.
 
 ```bash
-curl -X GET "https://api.teel.finance/api/recipients/rec_abc123/with-counterparty" \
+curl -X GET "https://dev.teelapp.io/api/recipients/rec_abc123/with-counterparty" \
   -H "Authorization: Bearer YOUR_API_TOKEN"
 ```
 
@@ -180,8 +189,16 @@ curl -X GET "https://api.teel.finance/api/recipients/rec_abc123/with-counterpart
     }
   ],
   "providers": [
-    { "provider": "provider_a", "status": "active", "counterparty_id": "cp_xyz" },
-    { "provider": "provider_b", "status": "active", "counterparty_id": "cp_abc" }
+    {
+      "provider": "provider_a",
+      "status": "active",
+      "counterparty_id": "cp_xyz"
+    },
+    {
+      "provider": "provider_b",
+      "status": "active",
+      "counterparty_id": "cp_abc"
+    }
   ],
   "createdAt": "2026-03-10T10:00:00Z"
 }

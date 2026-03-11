@@ -1,6 +1,6 @@
 ---
 title: Get Onboarding Status
-api: GET https://api.teel.finance/api/kyb/onboarding/status
+api: GET https://dev.teelapp.io/api/kyb/onboarding/status
 description: Get the KYB onboarding status across all providers
 ---
 
@@ -13,7 +13,8 @@ This endpoint requires a valid JWT bearer token in the `Authorization` header.
 ## Response
 
 <ResponseField name="overallStatus" type="string">
-  Aggregate onboarding status across all providers (e.g. `pending`, `partial`, `complete`).
+  Aggregate onboarding status across all providers (e.g. `pending`, `partial`,
+  `complete`).
 </ResponseField>
 
 <ResponseField name="providers" type="object">
@@ -30,6 +31,7 @@ This endpoint requires a valid JWT bearer token in the `Authorization` header.
     <ResponseField name="reason" type="string">
       Reason for rejection, if applicable.
     </ResponseField>
+
   </Expandable>
 </ResponseField>
 

@@ -17,7 +17,7 @@ Requirements vary by currency and rail. For example, ACH transfers need a routin
 Fetch the dynamic form schema for creating a payment method. The fields returned depend on the currencies and rails available to your account.
 
 ```bash
-curl -X GET "https://api.teel.finance/api/payment-methods/requirements" \
+curl -X GET "https://dev.teelapp.io/api/payment-methods/requirements" \
   -H "Authorization: Bearer YOUR_API_TOKEN"
 ```
 
@@ -30,9 +30,25 @@ curl -X GET "https://api.teel.finance/api/payment-methods/requirements" \
       "currency": "USD",
       "rail": "ach",
       "fields": [
-        { "name": "account_number", "type": "string", "required": true, "label": "Account Number" },
-        { "name": "routing_number", "type": "string", "required": true, "label": "Routing Number" },
-        { "name": "account_type", "type": "enum", "required": true, "values": ["checking", "savings"], "label": "Account Type" }
+        {
+          "name": "account_number",
+          "type": "string",
+          "required": true,
+          "label": "Account Number"
+        },
+        {
+          "name": "routing_number",
+          "type": "string",
+          "required": true,
+          "label": "Routing Number"
+        },
+        {
+          "name": "account_type",
+          "type": "enum",
+          "required": true,
+          "values": ["checking", "savings"],
+          "label": "Account Type"
+        }
       ]
     },
     {
@@ -40,14 +56,24 @@ curl -X GET "https://api.teel.finance/api/payment-methods/requirements" \
       "rail": "sepa",
       "fields": [
         { "name": "iban", "type": "string", "required": true, "label": "IBAN" },
-        { "name": "bic", "type": "string", "required": false, "label": "BIC/SWIFT Code" }
+        {
+          "name": "bic",
+          "type": "string",
+          "required": false,
+          "label": "BIC/SWIFT Code"
+        }
       ]
     },
     {
       "currency": "MXN",
       "rail": "spei",
       "fields": [
-        { "name": "clabe", "type": "string", "required": true, "label": "CLABE" }
+        {
+          "name": "clabe",
+          "type": "string",
+          "required": true,
+          "label": "CLABE"
+        }
       ]
     }
   ]
@@ -58,12 +84,12 @@ curl -X GET "https://api.teel.finance/api/payment-methods/requirements" \
 
 Use the schema from Step 1 to render a form in your application. Each currency/rail combination has its own set of fields. Common examples:
 
-| Currency | Rail | Key Fields                          |
-|----------|------|-------------------------------------|
-| USD      | ACH  | Account number, routing number      |
-| EUR      | SEPA | IBAN, BIC (optional)                |
-| GBP      | FPS  | Account number, sort code           |
-| MXN      | SPEI | CLABE                               |
+| Currency | Rail | Key Fields                     |
+| -------- | ---- | ------------------------------ |
+| USD      | ACH  | Account number, routing number |
+| EUR      | SEPA | IBAN, BIC (optional)           |
+| GBP      | FPS  | Account number, sort code      |
+| MXN      | SPEI | CLABE                          |
 
 ## Step 3: Create a Payment Method
 
@@ -72,7 +98,7 @@ Submit the form data to create a payment method. Teel provisions it across all o
 ### ACH (USD) Example
 
 ```bash
-curl -X POST "https://api.teel.finance/api/payment-methods" \
+curl -X POST "https://dev.teelapp.io/api/payment-methods" \
   -H "Authorization: Bearer YOUR_API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -88,7 +114,7 @@ curl -X POST "https://api.teel.finance/api/payment-methods" \
 ### SEPA (EUR) Example
 
 ```bash
-curl -X POST "https://api.teel.finance/api/payment-methods" \
+curl -X POST "https://dev.teelapp.io/api/payment-methods" \
   -H "Authorization: Bearer YOUR_API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -122,7 +148,7 @@ curl -X POST "https://api.teel.finance/api/payment-methods" \
 Retrieve all payment methods configured for your account.
 
 ```bash
-curl -X GET "https://api.teel.finance/api/payment-methods" \
+curl -X GET "https://dev.teelapp.io/api/payment-methods" \
   -H "Authorization: Bearer YOUR_API_TOKEN"
 ```
 
@@ -153,9 +179,9 @@ curl -X GET "https://api.teel.finance/api/payment-methods" \
 
 ## Payment Method vs. Recipient Payment Method
 
-| Aspect              | Your Payment Method             | Recipient Payment Method              |
-|----------------------|---------------------------------|---------------------------------------|
-| **Purpose**          | Fund outgoing payouts           | Receive incoming payments             |
-| **Configured via**   | `POST /api/payment-methods`     | Included in `POST /api/recipients`    |
-| **Belongs to**       | Your organization               | The recipient                         |
-| **Example**          | Your company's USD bank account | Vendor's EUR IBAN                     |
+| Aspect             | Your Payment Method             | Recipient Payment Method           |
+| ------------------ | ------------------------------- | ---------------------------------- |
+| **Purpose**        | Fund outgoing payouts           | Receive incoming payments          |
+| **Configured via** | `POST /api/payment-methods`     | Included in `POST /api/recipients` |
+| **Belongs to**     | Your organization               | The recipient                      |
+| **Example**        | Your company's USD bank account | Vendor's EUR IBAN                  |

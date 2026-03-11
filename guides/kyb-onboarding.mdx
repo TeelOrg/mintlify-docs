@@ -18,7 +18,7 @@ Before you can send or receive payments through Teel, your business must complet
 Determine which fields are required for KYB based on the currencies you plan to transact in.
 
 ```bash
-curl -X POST "https://api.teel.finance/api/kyb/capabilities/requirements" \
+curl -X POST "https://dev.teelapp.io/api/kyb/capabilities/requirements" \
   -H "Authorization: Bearer YOUR_API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -72,7 +72,7 @@ Use the dynamic schema from Step 1 to render a form in your application. Each fi
 Submit the completed form data. Teel routes the submission to all providers that match your currency needs.
 
 ```bash
-curl -X POST "https://api.teel.finance/api/kyb/register" \
+curl -X POST "https://dev.teelapp.io/api/kyb/register" \
   -H "Authorization: Bearer YOUR_API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -100,7 +100,7 @@ curl -X POST "https://api.teel.finance/api/kyb/register" \
 Poll the onboarding status endpoint to track your verification progress.
 
 ```bash
-curl -X GET "https://api.teel.finance/api/kyb/onboarding/status" \
+curl -X GET "https://dev.teelapp.io/api/kyb/onboarding/status" \
   -H "Authorization: Bearer YOUR_API_TOKEN"
 ```
 
@@ -120,14 +120,16 @@ curl -X GET "https://api.teel.finance/api/kyb/onboarding/status" \
 ### Status Values
 
 | Status         | Description                                              |
-|----------------|----------------------------------------------------------|
-| `pending`      | Submission received, verification has not started yet     |
-| `under_review` | Provider is actively reviewing your application           |
-| `approved`     | Verification passed -- you can begin transacting          |
-| `rejected`     | Verification failed -- check provider details for reason  |
+| -------------- | -------------------------------------------------------- |
+| `pending`      | Submission received, verification has not started yet    |
+| `under_review` | Provider is actively reviewing your application          |
+| `approved`     | Verification passed -- you can begin transacting         |
+| `rejected`     | Verification failed -- check provider details for reason |
 
 <Note>
-Each provider reviews independently. Your overall status is `approved` once at least one provider approves. You can begin transacting on approved providers while others are still under review.
+  Each provider reviews independently. Your overall status is `approved` once at
+  least one provider approves. You can begin transacting on approved providers
+  while others are still under review.
 </Note>
 
 ## Step 5: Create Provider Accounts
@@ -135,7 +137,7 @@ Each provider reviews independently. Your overall status is `approved` once at l
 Once approved, create your accounts with the verified providers. This provisions the infrastructure needed to send and receive payments.
 
 ```bash
-curl -X POST "https://api.teel.finance/api/kyb/onboarding/create-accounts" \
+curl -X POST "https://dev.teelapp.io/api/kyb/onboarding/create-accounts" \
   -H "Authorization: Bearer YOUR_API_TOKEN"
 ```
 

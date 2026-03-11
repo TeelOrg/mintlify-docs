@@ -1,6 +1,6 @@
 ---
 title: Get Best Offramp Quote
-api: GET https://api.teel.finance/api/quotes/offramp/best
+api: GET https://dev.teelapp.io/api/quotes/offramp/best
 description: Get the best quote for offramping crypto to fiat currency
 ---
 
@@ -9,7 +9,8 @@ Returns the single best offramp quote across all providers for converting crypto
 ## Query Parameters
 
 <ParamField query="payout_currency" type="string" required>
-  ISO 4217 currency code for the desired fiat payout currency (e.g. `USD`, `EUR`).
+  ISO 4217 currency code for the desired fiat payout currency (e.g. `USD`,
+  `EUR`).
 </ParamField>
 
 <ParamField query="amount" type="number" required>

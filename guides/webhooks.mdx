@@ -17,10 +17,10 @@ Connect to the Teel WebSocket endpoint to receive real-time events for your acco
 ### Connecting
 
 ```javascript
-const ws = new WebSocket("wss://api.teel.finance/ws", {
+const ws = new WebSocket("wss://dev.teelapp.io/ws", {
   headers: {
-    Authorization: "Bearer YOUR_API_TOKEN"
-  }
+    Authorization: "Bearer YOUR_API_TOKEN",
+  },
 });
 
 ws.onmessage = (event) => {
@@ -31,10 +31,10 @@ ws.onmessage = (event) => {
 
 ### Events
 
-| Event                  | Description                                      |
-|------------------------|--------------------------------------------------|
-| `payout.created`       | A new payout has been initiated                   |
-| `payout.status_update` | A payout's status has changed                     |
+| Event                  | Description                     |
+| ---------------------- | ------------------------------- |
+| `payout.created`       | A new payout has been initiated |
+| `payout.status_update` | A payout's status has changed   |
 
 ### Payload Format
 
@@ -93,7 +93,7 @@ sequenceDiagram
 Each payment provider sends webhook notifications to a provider-specific endpoint:
 
 ```
-POST https://api.teel.finance/api/{provider}/webhook
+POST https://dev.teelapp.io/api/{provider}/webhook
 ```
 
 When Teel receives a provider webhook:
@@ -118,13 +118,13 @@ stateDiagram-v2
     cancelled --> [*]
 ```
 
-| Status       | Description                                                    |
-|--------------|----------------------------------------------------------------|
-| `pending`    | Payout created but not yet submitted to the provider            |
-| `processing` | Provider has accepted the payout and is executing it            |
-| `completed`  | Funds have been delivered to the recipient                      |
-| `failed`     | The payout failed during processing (check error details)       |
-| `cancelled`  | The payout was cancelled before processing began                |
+| Status       | Description                                               |
+| ------------ | --------------------------------------------------------- |
+| `pending`    | Payout created but not yet submitted to the provider      |
+| `processing` | Provider has accepted the payout and is executing it      |
+| `completed`  | Funds have been delivered to the recipient                |
+| `failed`     | The payout failed during processing (check error details) |
+| `cancelled`  | The payout was cancelled before processing began          |
 
 ### Transition Rules
 
@@ -136,8 +136,8 @@ stateDiagram-v2
 ## Example: Listening for Completion
 
 ```javascript
-const ws = new WebSocket("wss://api.teel.finance/ws", {
-  headers: { Authorization: "Bearer YOUR_API_TOKEN" }
+const ws = new WebSocket("wss://dev.teelapp.io/ws", {
+  headers: { Authorization: "Bearer YOUR_API_TOKEN" },
 });
 
 ws.onmessage = (event) => {

@@ -14,24 +14,26 @@ This guide walks you through making your first cross-border payout using the Tee
     ```bash
     export TEEL_API_KEY="teel_live_your_api_key_here"
     ```
+
   </Step>
 
   <Step title="Check Coverage">
     Verify which currencies and corridors are available for your account based on your KYB status.
 
     ```bash
-    curl -X GET https://api.teel.finance/api/kyb/capabilities/currencies \
+    curl -X GET https://dev.teelapp.io/api/kyb/capabilities/currencies \
       -H "X-API-Key: $TEEL_API_KEY"
     ```
 
     The response lists all currencies you can send and receive. Ensure your desired corridor (e.g., USD to PHP) is supported before proceeding.
+
   </Step>
 
   <Step title="Create a Recipient">
     Register the person or business you want to send funds to.
 
     ```bash
-    curl -X POST https://api.teel.finance/api/recipients \
+    curl -X POST https://dev.teelapp.io/api/recipients \
       -H "X-API-Key: $TEEL_API_KEY" \
       -H "Content-Type: application/json" \
       -d '{
@@ -47,24 +49,26 @@ This guide walks you through making your first cross-border payout using the Tee
     ```
 
     Save the `id` from the response. This is your `recipient_id`.
+
   </Step>
 
   <Step title="Get a Quote">
     Fetch the best available rate across all providers for your corridor.
 
     ```bash
-    curl -X GET "https://api.teel.finance/api/quotes/fiat-to-fiat/best?source_currency=USD&target_currency=PHP&amount=1000" \
+    curl -X GET "https://dev.teelapp.io/api/quotes/fiat-to-fiat/best?source_currency=USD&target_currency=PHP&amount=1000" \
       -H "X-API-Key: $TEEL_API_KEY"
     ```
 
     The response includes the exchange rate, fees, estimated delivery amount, provider selected, and the quote TTL (expiry). You must use the quote before it expires.
+
   </Step>
 
   <Step title="Create a Payout">
     Execute the payout using the quote and recipient from the previous steps.
 
     ```bash
-    curl -X POST https://api.teel.finance/api/payouts \
+    curl -X POST https://dev.teelapp.io/api/payouts \
       -H "X-API-Key: $TEEL_API_KEY" \
       -H "Content-Type: application/json" \
       -d '{
@@ -78,24 +82,26 @@ This guide walks you through making your first cross-border payout using the Tee
     ```
 
     The payout is created in `pending` status and begins processing immediately.
+
   </Step>
 
   <Step title="Track Status">
     You can check payout status at any time via the REST API:
 
     ```bash
-    curl -X GET https://api.teel.finance/api/payouts/PAYOUT_ID \
+    curl -X GET https://dev.teelapp.io/api/payouts/PAYOUT_ID \
       -H "X-API-Key: $TEEL_API_KEY"
     ```
 
     For real-time updates, connect to the WebSocket endpoint:
 
     ```bash
-    wscat -c "wss://api.teel.finance/ws" \
+    wscat -c "wss://dev.teelapp.io/ws" \
       -H "X-API-Key: $TEEL_API_KEY"
     ```
 
     The WebSocket pushes status changes as they happen: `pending`, `processing`, `completed`, or `failed`.
+
   </Step>
 </Steps>
 
@@ -106,7 +112,8 @@ This guide walks you through making your first cross-border payout using the Tee
     Learn about API key management, JWT tokens, and WebSocket auth.
   </Card>
   <Card title="Core Concepts" href="/concepts">
-    Understand the multi-provider architecture, quote engine, and transaction lifecycle.
+    Understand the multi-provider architecture, quote engine, and transaction
+    lifecycle.
   </Card>
   <Card title="Coverage" href="/coverage">
     See all supported countries, currencies, and payment rails.

@@ -12,7 +12,7 @@ The Teel API supports two authentication methods: **API keys** for server-to-ser
 API keys are the simplest way to authenticate server-to-server requests. Include your key in the `X-API-Key` header:
 
 ```bash
-curl -X GET https://api.teel.finance/api/payouts \
+curl -X GET https://dev.teelapp.io/api/payouts \
   -H "X-API-Key: teel_live_your_api_key_here"
 ```
 
@@ -20,27 +20,34 @@ curl -X GET https://api.teel.finance/api/payouts \
 
 <Steps>
   <Step title="Sign up and complete KYB">
-    Create an account at [app.teel.finance](https://app.teel.finance) and complete the Know Your Business (KYB) onboarding process.
+    Create an account at [app.teel.finance](https://app.teel.finance) and
+    complete the Know Your Business (KYB) onboarding process.
   </Step>
   <Step title="Create an API key">
-    Navigate to the **API Keys** page in your dashboard. Click **Create API Key**, give it a label (e.g., "Production"), and save the key securely. The full key is only shown once.
+    Navigate to the **API Keys** page in your dashboard. Click **Create API
+    Key**, give it a label (e.g., "Production"), and save the key securely. The
+    full key is only shown once.
   </Step>
   <Step title="Request activation">
-    New API keys start in an **inactive** state. Contact **dahui@teelapp.io** with your use case to request activation. Once approved, your key will be activated and ready to use.
+    New API keys start in an **inactive** state. Contact **dahui@teelapp.io**
+    with your use case to request activation. Once approved, your key will be
+    activated and ready to use.
   </Step>
 </Steps>
 
 <Warning>
-  **Store your API key securely.** The full key is only displayed once at creation time. If you lose it, you can regenerate a new one from the dashboard (the old key will be immediately revoked).
+  **Store your API key securely.** The full key is only displayed once at
+  creation time. If you lose it, you can regenerate a new one from the dashboard
+  (the old key will be immediately revoked).
 </Warning>
 
 ### Key Lifecycle
 
-| Status | Description |
-| --- | --- |
+| Status       | Description                                                         |
+| ------------ | ------------------------------------------------------------------- |
 | **Inactive** | Key created but not yet activated. Cannot be used for API requests. |
-| **Active** | Key activated by Teel team. Ready for API access. |
-| **Revoked** | Key permanently disabled. Create a new key if needed. |
+| **Active**   | Key activated by Teel team. Ready for API access.                   |
+| **Revoked**  | Key permanently disabled. Create a new key if needed.               |
 
 You can manage multiple keys per business (e.g., separate keys for staging and production). Revoke or regenerate keys at any time from the dashboard.
 
@@ -49,7 +56,7 @@ You can manage multiple keys per business (e.g., separate keys for staging and p
 For dashboard applications and OAuth-based integrations, use Auth0 JWT Bearer tokens:
 
 ```bash
-curl -X GET https://api.teel.finance/api/payouts \
+curl -X GET https://dev.teelapp.io/api/payouts \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
@@ -61,7 +68,7 @@ curl -X POST https://auth.teel.finance/oauth/token \
   -d '{
     "client_id": "YOUR_CLIENT_ID",
     "client_secret": "YOUR_CLIENT_SECRET",
-    "audience": "https://api.teel.finance",
+    "audience": "https://dev.teelapp.io",
     "grant_type": "client_credentials"
   }'
 ```
@@ -70,27 +77,27 @@ curl -X POST https://auth.teel.finance/oauth/token \
 
 Some endpoints accept additional headers for resource scoping:
 
-| Header                | Description                     | Used By                           |
-| --------------------- | ------------------------------- | --------------------------------- |
-| `X-User-ID`           | Internal user identifier        | Recipients, KYB onboarding status |
-| `X-Customer-ID`       | Provider customer identifier    | Provider-specific endpoints       |
-| `X-Counterparty-ID`   | Counterparty identifier         | Counterparty operations           |
-| `X-Control-Person-ID` | Control person identifier       | Liveness checks                   |
-| `X-Payment-Method-ID` | Payment method identifier       | Payment method deletion           |
+| Header                | Description                  | Used By                           |
+| --------------------- | ---------------------------- | --------------------------------- |
+| `X-User-ID`           | Internal user identifier     | Recipients, KYB onboarding status |
+| `X-Customer-ID`       | Provider customer identifier | Provider-specific endpoints       |
+| `X-Counterparty-ID`   | Counterparty identifier      | Counterparty operations           |
+| `X-Control-Person-ID` | Control person identifier    | Liveness checks                   |
+| `X-Payment-Method-ID` | Payment method identifier    | Payment method deletion           |
 
 ## WebSocket Authentication
 
 For real-time payout status updates via WebSocket, pass your API key as a header on the connection upgrade:
 
 ```bash
-wscat -c "wss://api.teel.finance/ws" \
+wscat -c "wss://dev.teelapp.io/ws" \
   -H "X-API-Key: teel_live_your_api_key_here"
 ```
 
 JWT authentication is also supported:
 
 ```bash
-wscat -c "wss://api.teel.finance/ws" \
+wscat -c "wss://dev.teelapp.io/ws" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
@@ -105,6 +112,7 @@ Authentication errors return a `401 Unauthorized` response:
 ```
 
 Common causes:
+
 - Missing or invalid `X-API-Key` or `Authorization` header
 - API key is inactive (not yet activated) or revoked
 - JWT token is expired or malformed
