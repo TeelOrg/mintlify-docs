@@ -1,6 +1,6 @@
 ---
 title: Register Business (KYB)
-api: POST https://api.teel.finance/api/kyb/register
+api: POST https://dev.teelapp.io/api/kyb/register
 description: Register a business with all providers at once via KYB submission
 ---
 
@@ -27,7 +27,8 @@ Submits KYB (Know Your Business) information to register a business with all con
 </ParamField>
 
 <ParamField body="country" type="string" required>
-  ISO 3166-1 alpha-2 country code where the business is registered (e.g. `US`, `GB`).
+  ISO 3166-1 alpha-2 country code where the business is registered (e.g. `US`,
+  `GB`).
 </ParamField>
 
 <ParamField body="address" type="object" required>

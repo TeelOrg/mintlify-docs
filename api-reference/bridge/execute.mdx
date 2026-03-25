@@ -1,6 +1,6 @@
 ---
 title: Execute Bridge Transfer
-api: POST https://api.teel.finance/api/bridge/execute
+api: POST https://dev.teelapp.io/api/bridge/execute
 description: Execute a cross-chain bridge transfer
 ---
 
@@ -25,7 +25,8 @@ Initiates a cross-chain bridge transfer to move tokens from one blockchain to an
 </ParamField>
 
 <ParamField body="useFastTransfer" type="boolean">
-  Whether to use fast transfer mode for quicker settlement. May incur higher fees.
+  Whether to use fast transfer mode for quicker settlement. May incur higher
+  fees.
 </ParamField>
 
 <ParamField body="protocol" type="string">
@@ -43,7 +44,8 @@ Initiates a cross-chain bridge transfer to move tokens from one blockchain to an
 </ResponseField>
 
 <ResponseField name="status" type="string">
-  Current status of the bridge transfer (e.g. `pending`, `in_progress`, `completed`).
+  Current status of the bridge transfer (e.g. `pending`, `in_progress`,
+  `completed`).
 </ResponseField>
 
 <ResponseExample>

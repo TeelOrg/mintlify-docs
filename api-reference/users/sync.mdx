@@ -1,6 +1,6 @@
 ---
 title: Sync User
-api: POST https://api.teel.finance/api/users/sync
+api: POST https://dev.teelapp.io/api/users/sync
 description: Create or update a user from Auth0
 ---
 
@@ -29,7 +29,8 @@ This endpoint requires a valid JWT bearer token in the `Authorization` header.
 </ResponseField>
 
 <ResponseField name="created" type="boolean">
-  Whether a new user record was created (`true`) or an existing one was updated (`false`).
+  Whether a new user record was created (`true`) or an existing one was updated
+  (`false`).
 </ResponseField>
 
 <ResponseExample>
